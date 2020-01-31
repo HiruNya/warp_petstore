@@ -6,6 +6,12 @@ using a [special fork of warp](https://github.com/HiruNya/warp).
 
 [View the OpenAPI file generated here.](https://hiru.dev/demo/warp-petstore/openapi.json)
 
+## This Crate
+
+This binary does two things:
+- Produce an OpenAPI JSON file (default) describing a warp server.
+- Actually run a warp server (`cargo run --feature serve`)
+
 ## Possible Macros
 
 I've written down some possible macros that would make documentation much easier to write.
