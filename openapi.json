@@ -1,0 +1,817 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "",
+    "version": ""
+  },
+  "paths": {
+    "/pet/{petId}": {
+      "get": {
+        "summary": "Returns a single pet object",
+        "description": "Returns a single pet object",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "petId",
+            "description": "The id of the pet",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "type": "integer"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful Operation!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "The pet's status in the store",
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "category": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "name": {
+                      "example": "Doggy",
+                      "type": "string"
+                    },
+                    "photoUrls": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The pet could not be found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a pet",
+        "description": "Deletes a pet",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "petId",
+            "description": "The id of the pet",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "type": "integer"
+            },
+            "style": "simple"
+          },
+          {
+            "in": "header",
+            "name": "api_key",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {},
+        "responses": {
+          "404": {
+            "description": "The pet could not be found"
+          }
+        }
+      }
+    },
+    "/pet": {
+      "put": {
+        "summary": "Pet object that needs to be added to the store",
+        "description": "Pet object that needs to be added to the store",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "photoUrls": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "status": {
+                    "description": "The pet's status in the store",
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "example": "Doggy",
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {}
+      },
+      "post": {
+        "summary": "Adds a new pet to the store",
+        "description": "Adds a new pet to the store",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "category": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "photoUrls": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "name": {
+                    "example": "Doggy",
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "integer"
+                  },
+                  "status": {
+                    "description": "The pet's status in the store",
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {}
+      }
+    },
+    "/pet/findByStatus": {
+      "get": {
+        "summary": "Finds pets by status",
+        "description": "Finds pets by status",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "type": "string"
+            },
+            "style": "form"
+          }
+        ],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "description": "The pet's status in the store",
+                        "type": "string"
+                      },
+                      "name": {
+                        "example": "Doggy",
+                        "type": "string"
+                      },
+                      "photoUrls": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "tags": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "id": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      },
+                      "category": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "id": {
+                            "type": "integer"
+                          }
+                        }
+                      },
+                      "id": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/store/order/{orderId}": {
+      "get": {
+        "summary": "Find purchase order by ID",
+        "description": "Find purchase order by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orderId",
+            "description": "Id of pet that needs to be fetched",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "type": "integer"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "petId": {
+                      "type": "integer"
+                    },
+                    "quantity": {
+                      "type": "integer"
+                    },
+                    "shipDate": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "complete": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Order not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete purchase order by ID",
+        "description": "Delete purchase order by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orderId",
+            "description": "Id of pet that needs to be fetched",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "type": "integer"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "404": {
+            "description": "Order not found"
+          }
+        }
+      }
+    },
+    "/store/order": {
+      "post": {
+        "summary": "Place an order for a pet",
+        "description": "Place an order for a pet",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "petId": {
+                    "type": "integer"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "shipDate": {
+                    "type": "string"
+                  },
+                  "complete": {
+                    "type": "boolean"
+                  },
+                  "quantity": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "A successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "complete": {
+                      "type": "boolean"
+                    },
+                    "quantity": {
+                      "type": "integer"
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "petId": {
+                      "type": "integer"
+                    },
+                    "shipDate": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{username}": {
+      "get": {
+        "summary": "Get user by user name",
+        "description": "Get user by user name",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "username",
+            "description": "The name that needs to be fetched",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "firstName": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "user_status": {
+                      "type": "integer"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a user",
+        "description": "Update a user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "username",
+            "description": "The name that needs to be fetched",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "user_status": {
+                    "type": "integer"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "integer"
+                  },
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a user",
+        "description": "Delete a user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "username",
+            "description": "The name that needs to be fetched",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {},
+        "responses": {
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "get": {
+        "summary": "Logs the user into the system",
+        "description": "Logs the user into the system",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "username",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "type": "string"
+            },
+            "style": "form"
+          },
+          {
+            "in": "query",
+            "name": "password",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "type": "string"
+            },
+            "style": "form"
+          }
+        ],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {
+              "X-Expires-After": {
+                "description": "Date in UTC when token expires",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Rate-Limit": {
+                "description": "Calls per hour allowed by the user",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/logout": {
+      "get": {
+        "summary": "Logs out current logged in user session",
+        "description": "Logs out current logged in user session",
+        "requestBody": {},
+        "responses": {}
+      }
+    },
+    "/user": {
+      "post": {
+        "summary": "Creates a user",
+        "description": "Creates a user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "user_status": {
+                    "type": "integer"
+                  },
+                  "id": {
+                    "type": "integer"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "firstName": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {}
+      }
+    },
+    "/user/createWithArray": {
+      "post": {
+        "summary": "Creates a list of users at once with a given array",
+        "description": "Creates a list of users at once with a given array",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "List of user objects",
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "firstName": {
+                      "type": "string"
+                    },
+                    "user_status": {
+                      "type": "integer"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {}
+      }
+    },
+    "/user/createWithList": {
+      "post": {
+        "summary": "Creates a list of users at once with a given array",
+        "description": "Creates a list of users at once with a given array",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "List of user objects",
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "user_status": {
+                      "type": "integer"
+                    },
+                    "firstName": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "username": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {}
+      }
+    }
+  }
+}
