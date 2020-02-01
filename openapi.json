@@ -31,33 +31,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": {
-                      "description": "The pet's status in the store",
-                      "type": "string"
-                    },
                     "name": {
                       "example": "Doggy",
                       "type": "string"
-                    },
-                    "photoUrls": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "id": {
-                      "type": "integer"
-                    },
-                    "category": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "integer"
-                        },
-                        "name": {
-                          "type": "string"
-                        }
-                      }
                     },
                     "tags": {
                       "type": "array",
@@ -71,6 +47,30 @@
                             "type": "integer"
                           }
                         }
+                      }
+                    },
+                    "category": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "status": {
+                      "description": "The pet's status in the store",
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "photoUrls": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
                       }
                     }
                   }
@@ -127,20 +127,17 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "photoUrls": {
+                  "tags": {
                     "type": "array",
                     "items": {
-                      "type": "string"
-                    }
-                  },
-                  "category": {
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "type": "string"
-                      },
-                      "id": {
-                        "type": "integer"
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "integer"
+                        }
                       }
                     }
                   },
@@ -151,23 +148,26 @@
                     "example": "Doggy",
                     "type": "string"
                   },
-                  "tags": {
+                  "photoUrls": {
                     "type": "array",
                     "items": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "integer"
-                        },
-                        "name": {
-                          "type": "string"
-                        }
-                      }
+                      "type": "string"
                     }
                   },
                   "status": {
                     "description": "The pet's status in the store",
                     "type": "string"
+                  },
+                  "category": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
                   }
                 }
               }
@@ -186,28 +186,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
-                    "example": "Doggy",
-                    "type": "string"
-                  },
-                  "status": {
-                    "description": "The pet's status in the store",
-                    "type": "string"
-                  },
-                  "tags": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "integer"
-                        },
-                        "name": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
                   "photoUrls": {
                     "type": "array",
                     "items": {
@@ -227,6 +205,28 @@
                         "type": "integer"
                       }
                     }
+                  },
+                  "name": {
+                    "example": "Doggy",
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "status": {
+                    "description": "The pet's status in the store",
+                    "type": "string"
                   }
                 }
               }
@@ -264,6 +264,25 @@
                   "items": {
                     "type": "object",
                     "properties": {
+                      "status": {
+                        "description": "The pet's status in the store",
+                        "type": "string"
+                      },
+                      "category": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "id": {
+                            "type": "integer"
+                          }
+                        }
+                      },
+                      "name": {
+                        "example": "Doggy",
+                        "type": "string"
+                      },
                       "tags": {
                         "type": "array",
                         "items": {
@@ -278,32 +297,13 @@
                           }
                         }
                       },
-                      "status": {
-                        "description": "The pet's status in the store",
-                        "type": "string"
-                      },
                       "id": {
                         "type": "integer"
-                      },
-                      "name": {
-                        "example": "Doggy",
-                        "type": "string"
                       },
                       "photoUrls": {
                         "type": "array",
                         "items": {
                           "type": "string"
-                        }
-                      },
-                      "category": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "integer"
-                          },
-                          "name": {
-                            "type": "string"
-                          }
                         }
                       }
                     }
@@ -341,23 +341,23 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "complete": {
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "petId": {
+                      "type": "integer"
+                    },
                     "quantity": {
                       "type": "integer"
                     },
                     "shipDate": {
                       "type": "string"
-                    },
-                    "id": {
-                      "type": "integer"
-                    },
-                    "status": {
-                      "type": "string"
-                    },
-                    "petId": {
-                      "type": "integer"
-                    },
-                    "complete": {
-                      "type": "boolean"
                     }
                   }
                 }
@@ -406,23 +406,23 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "petId": {
+                    "type": "integer"
+                  },
+                  "id": {
+                    "type": "integer"
+                  },
+                  "quantity": {
+                    "type": "integer"
+                  },
                   "shipDate": {
                     "type": "string"
                   },
                   "status": {
                     "type": "string"
                   },
-                  "quantity": {
-                    "type": "integer"
-                  },
                   "complete": {
                     "type": "boolean"
-                  },
-                  "id": {
-                    "type": "integer"
-                  },
-                  "petId": {
-                    "type": "integer"
                   }
                 }
               }
@@ -438,23 +438,23 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "shipDate": {
-                      "type": "string"
-                    },
-                    "status": {
-                      "type": "string"
-                    },
-                    "complete": {
-                      "type": "boolean"
+                    "petId": {
+                      "type": "integer"
                     },
                     "id": {
                       "type": "integer"
                     },
+                    "shipDate": {
+                      "type": "string"
+                    },
                     "quantity": {
                       "type": "integer"
                     },
-                    "petId": {
-                      "type": "integer"
+                    "complete": {
+                      "type": "boolean"
+                    },
+                    "status": {
+                      "type": "string"
                     }
                   }
                 }
@@ -490,14 +490,17 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "phone": {
-                      "type": "string"
-                    },
                     "user_status": {
                       "type": "integer"
                     },
-                    "id": {
-                      "type": "integer"
+                    "phone": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
                     },
                     "lastName": {
                       "type": "string"
@@ -505,14 +508,11 @@
                     "firstName": {
                       "type": "string"
                     },
-                    "email": {
-                      "type": "string"
-                    },
-                    "username": {
-                      "type": "string"
-                    },
                     "password": {
                       "type": "string"
+                    },
+                    "id": {
+                      "type": "integer"
                     }
                   }
                 }
@@ -546,29 +546,29 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "email": {
-                    "type": "string"
+                  "id": {
+                    "type": "integer"
                   },
                   "password": {
                     "type": "string"
                   },
-                  "phone": {
-                    "type": "string"
-                  },
-                  "lastName": {
-                    "type": "string"
-                  },
-                  "username": {
+                  "email": {
                     "type": "string"
                   },
                   "firstName": {
                     "type": "string"
                   },
+                  "phone": {
+                    "type": "string"
+                  },
                   "user_status": {
                     "type": "integer"
                   },
-                  "id": {
-                    "type": "integer"
+                  "username": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
                   }
                 }
               }
@@ -637,16 +637,16 @@
           "200": {
             "description": "",
             "headers": {
-              "X-Expires-After": {
-                "description": "Date in UTC when token expires",
+              "X-Rate-Limit": {
+                "description": "Calls per hour allowed by the user",
                 "style": "simple",
                 "required": true,
                 "schema": {
                   "type": "string"
                 }
               },
-              "X-Rate-Limit": {
-                "description": "Calls per hour allowed by the user",
+              "X-Expires-After": {
+                "description": "Date in UTC when token expires",
                 "style": "simple",
                 "required": true,
                 "schema": {
@@ -686,28 +686,28 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "phone": {
-                    "type": "string"
-                  },
-                  "email": {
+                  "password": {
                     "type": "string"
                   },
                   "user_status": {
                     "type": "integer"
                   },
-                  "id": {
-                    "type": "integer"
-                  },
-                  "username": {
-                    "type": "string"
-                  },
-                  "password": {
+                  "phone": {
                     "type": "string"
                   },
                   "firstName": {
                     "type": "string"
                   },
+                  "username": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "integer"
+                  },
                   "lastName": {
+                    "type": "string"
+                  },
+                  "email": {
                     "type": "string"
                   }
                 }
@@ -732,28 +732,28 @@
                 "items": {
                   "type": "object",
                   "properties": {
-                    "firstName": {
-                      "type": "string"
-                    },
                     "lastName": {
                       "type": "string"
                     },
-                    "id": {
-                      "type": "integer"
-                    },
                     "username": {
-                      "type": "string"
-                    },
-                    "password": {
                       "type": "string"
                     },
                     "user_status": {
                       "type": "integer"
                     },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
                     "phone": {
                       "type": "string"
                     },
-                    "email": {
+                    "password": {
+                      "type": "string"
+                    },
+                    "firstName": {
                       "type": "string"
                     }
                   }
@@ -779,7 +779,10 @@
                 "items": {
                   "type": "object",
                   "properties": {
-                    "firstName": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "phone": {
                       "type": "string"
                     },
                     "email": {
@@ -788,20 +791,17 @@
                     "lastName": {
                       "type": "string"
                     },
-                    "password": {
-                      "type": "string"
-                    },
-                    "phone": {
-                      "type": "string"
-                    },
                     "user_status": {
                       "type": "integer"
                     },
-                    "username": {
+                    "firstName": {
                       "type": "string"
                     },
                     "id": {
                       "type": "integer"
+                    },
+                    "password": {
+                      "type": "string"
                     }
                   }
                 }
