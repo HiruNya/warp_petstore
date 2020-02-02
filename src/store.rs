@@ -1,5 +1,5 @@
 use warp::{body, Filter, filters::path::path, Rejection, reply::{self, Reply}};
-use warp::document::{self, body, boolean, description, DocumentedType, map, integer, response, string};
+use warp::document::{self, body, boolean, description, DocumentedType, map, integer, response, string, ToDocumentedType};
 use serde::{Deserialize, Serialize};
 
 use std::collections::HashMap;
@@ -43,7 +43,7 @@ fn find_order() -> impl Filter<Extract = (impl Reply,), Error = Rejection> + Clo
 	order_id()
 		.and(warp::get())
 		.and(document::document(description("Find purchase order by ID")))
-		.and(document::document(response(200, body(order_struct()).mime("application/json"))))
+		.and(document::document(response(200, body(Order::document()).mime("application/json"))))
 		.map(|id| reply::json(&Order{ id, ..Order::default() }))
 }
 
@@ -59,20 +59,9 @@ fn place_order() -> impl Filter<Extract = impl Reply, Error = Rejection> + Clone
 	warp::post()
 		.and(document::document(description("Place an order for a pet")))
 		.and(body::json())
-		.and(document::document(body(order_struct()).mime("application/json")))
-		.and(document::document(response(200, body(order_struct()).mime("application/json")).description("A successful operation")))
+		.and(document::document(body(Order::document()).mime("application/json")))
+		.and(document::document(response(200, body(Order::document()).mime("application/json")).description("A successful operation")))
 		.map(|order: Order| reply::json(&order))
-}
-
-fn order_struct() -> DocumentedType {
-	let mut properties = HashMap::with_capacity(6);
-	properties.insert("id".into(), integer());
-	properties.insert("petId".into(), integer());
-	properties.insert("quantity".into(), integer());
-	properties.insert("shipDate".into(), string());
-	properties.insert("status".into(), string());
-	properties.insert("complete".into(), boolean());
-	properties.into()
 }
 
 #[derive(Default, Deserialize, Serialize)]
@@ -84,5 +73,18 @@ pub struct Order {
 	ship_date: String,
 	status: String,
 	complete: bool,
+}
+
+impl ToDocumentedType for Order {
+	fn document() -> DocumentedType {
+		let mut properties = HashMap::with_capacity(6);
+		properties.insert("id".into(), integer());
+		properties.insert("petId".into(), integer());
+		properties.insert("quantity".into(), integer());
+		properties.insert("shipDate".into(), string());
+		properties.insert("status".into(), string());
+		properties.insert("complete".into(), boolean());
+		properties.into()
+	}
 }
 

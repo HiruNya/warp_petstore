@@ -1,5 +1,6 @@
 use warp::{body, Filter, path::path, Rejection, reply::{self, Reply}};
-use warp::document::{self, array, body, description, DocumentedType, header, integer, response, string, query, RouteDocumentation};
+use warp::document::{self, body, description, DocumentedType, header, integer, response,
+                     string, query, RouteDocumentation, ToDocumentedType};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -30,7 +31,7 @@ fn get_user() -> impl Filter<Extract = impl Reply, Error = Rejection> + Clone {
 	warp::get()
 		.and(username())
 		.and(document::document(description("Get user by user name")))
-		.and(document::document(response(200, body(user_struct()).mime("application/json")).description("Successful operation")))
+		.and(document::document(response(200, body(User::document()).mime("application/json")).description("Successful operation")))
 		.map(|username| reply::json(&User{ username, ..User::default() }))
 }
 
@@ -83,13 +84,13 @@ fn create_user_with_array() -> impl Filter<Extract = (impl Reply,), Error = Reje
 	warp::post()
 		.and(document::document(description("Creates a list of users at once with a given array")))
 		.and(body::json())
-		.and(document::document(body(array(user_struct()).description("List of user objects")).mime("application/json")))
+		.and(document::document(body(<Vec<User>>::document().description("List of user objects")).mime("application/json")))
 		.map(|list: Vec<User>| format!("Created {} users.", list.len()))
 }
 
 fn user_json() -> impl Filter<Extract = (User,), Error = Rejection> + Clone {
 	body::json()
-		.and(document::document(body(user_struct()).mime("application/json")))
+		.and(document::document(body(User::document()).mime("application/json")))
 }
 
 #[derive(Default, Deserialize, Serialize)]
@@ -105,15 +106,17 @@ struct User {
 	user_status: u8,
 }
 
-fn user_struct() -> DocumentedType {
-	let mut map = HashMap::with_capacity(8);
-	map.insert("id".into(), integer());
-	map.insert("username".into(), string());
-	map.insert("firstName".into(), string());
-	map.insert("lastName".into(), string());
-	map.insert("email".into(), string());
-	map.insert("password".into(), string());
-	map.insert("phone".into(), string());
-	map.insert("userStatus".into(), integer());
-	map.into()
+impl ToDocumentedType for User {
+	fn document() -> DocumentedType {
+		let mut map = HashMap::with_capacity(8);
+		map.insert("id".into(), integer());
+		map.insert("username".into(), string());
+		map.insert("firstName".into(), string());
+		map.insert("lastName".into(), string());
+		map.insert("email".into(), string());
+		map.insert("password".into(), string());
+		map.insert("phone".into(), string());
+		map.insert("userStatus".into(), integer());
+		map.into()
+	}
 }

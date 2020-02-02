@@ -21,7 +21,7 @@ I've written down some possible macros that would make documentation much easier
 Currently the method of defining structs is tedious and prone to human error.
 e.g.
 ```rust
-use warp::document::{DocumentedType, integer};
+use warp::document::{DocumentedType, integer, ToDocumentedType};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -32,7 +32,7 @@ pub struct User {
     user_name: String,
     age: u8,
 }
-impl DocumentedType {
+impl ToDocumentedType for User {
     fn document() -> DocumentedType {
         let mut hashmap = HashMap::with_capacity(3);
         map.insert("id", integer());
