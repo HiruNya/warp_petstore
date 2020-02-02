@@ -13,12 +13,11 @@ pub fn user() -> impl Filter<Extract = impl Reply, Error = Rejection> + Clone {
 			.or(delete_user())
 			.or(login())
 			.or(logout())
-			.or(create_user())
 			// For some reason in the official specification, the route is repeated with different names
 			.or(
-				path("createWithArray").and(create_user_with_array())
-				.or(path("createWithList").and(create_user_with_array()))
+				path("createWithArray").or(path("createWithList")).unify().and(create_user_with_array())
 			)
+			.or(create_user())
 		)
 }
 
@@ -115,6 +114,6 @@ fn user_struct() -> DocumentedType {
 	map.insert("email".into(), string());
 	map.insert("password".into(), string());
 	map.insert("phone".into(), string());
-	map.insert("user_status".into(), integer());
+	map.insert("userStatus".into(), integer());
 	map.into()
 }

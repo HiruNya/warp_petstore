@@ -48,15 +48,15 @@ pub fn pet_json() -> impl Filter<Extract=(Pet, ), Error=Rejection> + Clone {
 }
 
 pub fn pet_post() -> impl Filter<Extract=impl Reply, Error=Rejection> + Clone {
-	pet_json()
-		.and(warp::post())
+	warp::post()
+		.and(pet_json())
 		.and(document::document(description("Adds a new pet to the store")))
 		.map(|_| "Created")
 }
 
 pub fn pet_put() -> impl Filter<Extract=impl Reply, Error=Rejection> + Clone {
-	pet_json()
-		.and(warp::put())
+	warp::put()
+		.and(pet_json())
 		.and(document::document(description("Pet object that needs to be added to the store")))
 		.map(|_| "Created")
 }
@@ -75,14 +75,14 @@ pub fn pet_status() -> impl Filter<Extract=impl Reply, Error=Rejection> + Clone 
 #[serde(rename_all = "camelCase")]
 pub struct Pet {
 	id: usize,
-	category: String,
+	category: Generic,
 	name: String,
 	photo_urls: Vec<String>,
 	tags: Vec<Generic>,
 	status: PetStatus,
 }
 
-#[derive(Clone, Deserialize, Serialize)]
+#[derive(Clone, Default, Deserialize, Serialize)]
 pub struct Generic {
 	id: usize,
 	name: String,
