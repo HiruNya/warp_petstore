@@ -1,5 +1,5 @@
 use warp::{body, Filter, filters::path::path, Rejection, reply::{self, Reply}};
-use warp::document::{self, body, boolean, description, DocumentedType, integer, response, string};
+use warp::document::{self, body, boolean, description, DocumentedType, map, integer, response, string};
 use serde::{Deserialize, Serialize};
 
 use std::collections::HashMap;
@@ -8,12 +8,30 @@ use crate::util::param;
 
 pub fn store() -> impl Filter<Extract = impl Reply, Error = Rejection> + Clone {
 	path("store")
-		.and(path("order"))
 		.and(
-			find_order()
-			.or(delete_order())
-			.or(place_order())
+			inventory()
+			.or(
+				path("order")
+				.and(
+					find_order()
+					.or(delete_order())
+					.or(place_order())
+				)
+			)
 		)
+}
+
+fn inventory() -> impl Filter<Extract = impl Reply, Error = Rejection> + Clone {
+	path("inventory")
+		.and(warp::get())
+		.and(document::document(description("Returns pet inventories by status")))
+		.and(document::document(response(200, body(map(integer())).mime("application/json")).description("Successful Operation")))
+		.map(|| {
+			let mut inventory = HashMap::with_capacity(2);
+			inventory.insert("Dog", 3);
+			inventory.insert("Cat", 1);
+			reply::json(&inventory)
+		})
 }
 
 fn order_id() -> impl Filter<Extract = (u32,), Error = Rejection> + Clone {

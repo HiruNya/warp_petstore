@@ -21,7 +21,7 @@ pub fn user() -> impl Filter<Extract = impl Reply, Error = Rejection> + Clone {
 		)
 }
 
-pub fn username() -> impl Filter<Extract = (String,), Error = Rejection> + Clone {
+fn username() -> impl Filter<Extract = (String,), Error = Rejection> + Clone {
 	param("username", "The name that needs to be fetched")
 		.and(document::document(response(404, None).description("User not found")))
 }
@@ -94,7 +94,7 @@ fn user_json() -> impl Filter<Extract = (User,), Error = Rejection> + Clone {
 
 #[derive(Default, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct User {
+struct User {
 	id: u32,
 	username: String,
 	first_name: String,

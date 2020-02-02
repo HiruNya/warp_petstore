@@ -18,13 +18,13 @@ pub fn pet() -> impl Filter<Extract=impl Reply, Error=Rejection> + Clone {
 		)
 }
 
-pub fn pet_id() -> impl Filter<Extract=(usize,), Error=Rejection> + Clone {
+fn pet_id() -> impl Filter<Extract=(usize,), Error=Rejection> + Clone {
 	param("petId", "The id of the pet")
 		// If we can't find the pet, we return a 404
 		.and(document::document(response(404, None).description("The pet could not be found")))
 }
 
-pub fn get_pet() -> impl Filter<Extract=impl Reply, Error=Rejection> + Clone {
+fn get_pet() -> impl Filter<Extract=impl Reply, Error=Rejection> + Clone {
 	pet_id()
 		.and(warp::get())
 		.and(document::document(description("Returns a single pet object")))
@@ -32,7 +32,7 @@ pub fn get_pet() -> impl Filter<Extract=impl Reply, Error=Rejection> + Clone {
 		.map(|id| reply::json(&Pet { id, ..Pet::default() }))
 }
 
-pub fn delete_pet() -> impl Filter<Extract=impl Reply, Error=Rejection> + Clone {
+fn delete_pet() -> impl Filter<Extract=impl Reply, Error=Rejection> + Clone {
 	pet_id()
 		.and(warp::delete())
 		.and(header("api_key"))
@@ -40,28 +40,28 @@ pub fn delete_pet() -> impl Filter<Extract=impl Reply, Error=Rejection> + Clone 
 		.map(|id, _key: String| format!("Deleted pet #{}", id))
 }
 
-pub fn pet_json() -> impl Filter<Extract=(Pet, ), Error=Rejection> + Clone {
+fn pet_json() -> impl Filter<Extract=(Pet, ), Error=Rejection> + Clone {
 	warp::any()
 		.and(body::json())
 		.and(document::document(body(pet_struct()).mime("application/json")))
 		.and(document::document(body(pet_struct()).mime("application/json")))
 }
 
-pub fn pet_post() -> impl Filter<Extract=impl Reply, Error=Rejection> + Clone {
+fn pet_post() -> impl Filter<Extract=impl Reply, Error=Rejection> + Clone {
 	warp::post()
 		.and(pet_json())
 		.and(document::document(description("Adds a new pet to the store")))
 		.map(|_| "Created")
 }
 
-pub fn pet_put() -> impl Filter<Extract=impl Reply, Error=Rejection> + Clone {
+fn pet_put() -> impl Filter<Extract=impl Reply, Error=Rejection> + Clone {
 	warp::put()
 		.and(pet_json())
 		.and(document::document(description("Pet object that needs to be added to the store")))
 		.map(|_| "Created")
 }
 
-pub fn pet_status() -> impl Filter<Extract=impl Reply, Error=Rejection> + Clone {
+fn pet_status() -> impl Filter<Extract=impl Reply, Error=Rejection> + Clone {
 	path("findByStatus")
 		.and(warp::get())
 		.and(document::document(description("Finds pets by status")))
@@ -73,7 +73,7 @@ pub fn pet_status() -> impl Filter<Extract=impl Reply, Error=Rejection> + Clone 
 
 #[derive(Clone, Default, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Pet {
+struct Pet {
 	id: usize,
 	category: Generic,
 	name: String,
@@ -83,7 +83,7 @@ pub struct Pet {
 }
 
 #[derive(Clone, Default, Deserialize, Serialize)]
-pub struct Generic {
+struct Generic {
 	id: usize,
 	name: String,
 }
@@ -91,7 +91,7 @@ pub struct Generic {
 #[allow(dead_code)]
 #[derive(Clone, Deserialize, Serialize)]
 #[serde(rename_all = "snake_case")]
-pub enum PetStatus {
+enum PetStatus {
 	Available,
 	Pending,
 	Sold,
