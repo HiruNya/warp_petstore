@@ -14,9 +14,10 @@ pub fn user() -> impl Filter<Extract = impl Reply, Error = Rejection> + Clone {
 			.or(delete_user())
 			.or(login())
 			.or(logout())
-			// For some reason in the official specification, the route is repeated with different names
 			.or(
-				path("createWithArray").or(path("createWithList")).unify().and(create_user_with_array())
+				// For some reason in the official specification, the route is repeated with different names
+				path("createWithArray").and(create_user_with_array())
+				.or(path("createWithList").and(create_user_with_array()))
 			)
 			.or(create_user())
 		)
