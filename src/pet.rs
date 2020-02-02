@@ -65,9 +65,9 @@ fn pet_status() -> impl Filter<Extract=impl Reply, Error=Rejection> + Clone {
 		.and(warp::get())
 		.and(document::document(description("Finds pets by status")))
 		.and(query())
-		.and(document::document(|r: &mut RouteDocumentation| r.query(document::query("status", array(string())).required(true))))
+		.and(document::document(|r: &mut RouteDocumentation| r.query(document::query("status", string()).required(true))))
 		.and(document::document(response(200, body(array(Pet::document())).mime("application/json"))))
-		.map(|_status: Vec<String>| reply::json(&vec![PetStatus::default(); 2]))
+		.map(|_status: HashMap<String, String>| reply::json(&vec![PetStatus::default(); 2]))
 }
 
 #[derive(Clone, Default, Deserialize, Serialize)]
@@ -119,11 +119,11 @@ impl ToDocumentedType for Pet {
 		let mut properties = HashMap::with_capacity(6);
 		properties.insert("id".into(), integer());
 		properties.insert("category".into(), generic_struct());
-		properties.insert("name".into(), string().example("Doggy".into()));
+		properties.insert("name".into(), string().example("Doggy"));
 		properties.insert("photoUrls".into(), array(string()));
 		properties.insert("tags".into(), array(generic_struct()));
 		// Enums are not yet supported
-		properties.insert("status".into(), string().description("The pet's status in the store"));
+		properties.insert("status".into(), string().description("The pet's status in the store").example("available"));
 		properties.into()
 	}
 }

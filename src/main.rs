@@ -16,10 +16,12 @@ async fn main() {
 
 	#[cfg(feature = "serve")]
 	{
-		use warp::{filters::path::path, reply::json};
+		use warp::{filters::{fs::file, path::path}, reply::json};
 
 		// Lets serve the specification as well at /openapi.json
-		let routes = routes.or(path("openapi.json").map(move || json(&documentation)));
+		// And the documentation will be at /docs
+		let routes = routes.or(path("openapi.json").map(move || json(&documentation)))
+			.or(path("docs").and(file("./public/index.html")));
 		warp::serve(routes).run(([127, 0, 0, 1], 8080)).await
 	}
 }

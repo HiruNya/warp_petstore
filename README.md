@@ -10,7 +10,7 @@ using a [special fork of warp](https://github.com/HiruNya/warp).
 
 This binary does two things:
 - Produce an OpenAPI JSON file (default) describing a warp server.
-- Actually run a warp server (`cargo run --feature serve`)
+- Actually run a warp server (`cargo run --feature serve`). With the documentation hosted at `127.0.0.1:8080/docs`.
 
 ## Possible Macros
 

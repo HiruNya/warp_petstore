@@ -9,11 +9,11 @@ use crate::util::param;
 pub fn user() -> impl Filter<Extract = impl Reply, Error = Rejection> + Clone {
 	path("user")
 		.and(
-			get_user()
+			login()
+			.or(logout())
+			.or(get_user())
 			.or(update_user())
 			.or(delete_user())
-			.or(login())
-			.or(logout())
 			.or(
 				// For some reason in the official specification, the route is repeated with different names
 				path("createWithArray").and(create_user_with_array())
